@@ -1,8 +1,9 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header reveal elevated>
       <q-toolbar>
         <q-btn
+          v-if="drawer"
           flat
           dense
           round
@@ -12,14 +13,15 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          {{ appTitle }}
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <SigninSignout @signin-event="signinEvent" />
       </q-toolbar>
     </q-header>
 
     <q-drawer
+      v-if="drawer"
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -30,80 +32,49 @@
           header
           class="text-grey-8"
         >
-          Essential Links
+          Admin Menu
         </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
       </q-list>
     </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer reveal elevated>
+      <q-toolbar>
+        <q-toolbar-title class="text-caption">
+          {{ copyright }}
+        </q-toolbar-title>
+
+        <div class="text-caption">{{ appName }} v{{ appVersion }}</div>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
 <script lang="ts">
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksData = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
+import { SigninEvent } from '../types'
+import SigninSignout from 'components/SigninSignout.vue'
 import { defineComponent, ref } from '@vue/composition-api'
 
 export default defineComponent({
   name: 'MainLayout',
-  components: { EssentialLink },
-  setup () {
-    const leftDrawerOpen = ref(false)
-    const essentialLinks = ref(linksData)
+  components: { SigninSignout },
 
-    return { leftDrawerOpen, essentialLinks }
-  }
+  setup (props, context) {
+    const appName = ref('microscope-ui')
+    const appTitle = ref('Microscope UI')
+    const appVersion = ref('1.0.0')
+    const copyright = ref('© 2020 Quantum Ogre LLC')
+    const drawer = ref(true)
+    const leftDrawerOpen = ref(false)
+
+    const signinEvent = (ev : SigninEvent) => {
+      console.log('SIGNIN event', ev)
+    }
+
+    return { appName, appTitle, appVersion, copyright, drawer, leftDrawerOpen, signinEvent }
+  },
 })
 </script>
