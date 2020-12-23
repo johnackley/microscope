@@ -1,6 +1,6 @@
-# Microscope UI (microscope-ui)
+# beet and pear (beetpear)
 
-Microscope RPG webapp and mobile UI
+Beet & Pear website
 
 ## Install the dependencies
 ```bash

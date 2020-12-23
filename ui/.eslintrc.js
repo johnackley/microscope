@@ -89,6 +89,28 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
 
     // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  }
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+
+    semi: [
+      'error',
+      'never',
+    ],
+    'comma-dangle': ['error', {
+      arrays: 'always-multiline',
+      objects: 'always-multiline',
+      imports: 'always-multiline',
+      exports: 'always-multiline',
+      functions: 'always-multiline',
+    }],
+  },
+
+  overrides: [
+    {
+      files: ['*.js'],
+      rules: {
+          '@typescript-eslint/...': 'off'
+      }
+    }
+  ],
+
 }

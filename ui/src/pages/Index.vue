@@ -1,49 +1,46 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="flex flex-center">
+    <q-list dense bordered padding >
+      <q-item
+        v-for="state in states"
+        v-bind:key="state.id"
+      >
+        <q-item-section>
+          {{ state.code }} - {{ state.name }}
+        </q-item-section>
+      </q-item>
+    </q-list>
   </q-page>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models'
-import ExampleComponent from 'components/CompositionComponent.vue'
-import { defineComponent, ref } from '@vue/composition-api'
+// import { Paginated } from '@feathersjs/feathers'
+import { defineComponent, /* ref, */ onMounted } from '@vue/composition-api'
+// import { State } from '../types'
 
 export default defineComponent({
   name: 'PageIndex',
-  components: { ExampleComponent },
-  setup () {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1'
-      },
-      {
-        id: 2,
-        content: 'ct2'
-      },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
-      }
-    ])
-    const meta = ref<Meta>({
-      totalCount: 1200
+  components: {},
+  setup (props, context) {
+    // const states = ref<State[]>([])
+
+    onMounted(() => {
+      // const root = context.root
+      // const api = root.$api
+      // const statesService = api.service('states')
+      // statesService.find({ query: { code: { $in: ['NJ', 'NY', 'OH', 'PA'] } } })
+      //   .then((results) => {
+      //     const pgResults = results as Paginated<State>
+      //     if (pgResults.data && pgResults.data.length > 0) {
+      //       states.value = [...pgResults.data]
+      //       console.log('got the states:', states)
+      //     }
+      //   }).catch(_e => {
+      //     console.log('error fetching states', _e)
+      //   })
     })
-    return { todos, meta }
-  }
+
+    return {}
+  },
 })
 </script>
