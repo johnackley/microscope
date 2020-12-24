@@ -1,25 +1,23 @@
 import { JSONSchema, Model, ModelObject } from 'objection'
 import { DBUtils } from '../db-utils'
 import { Application } from '../declarations'
-import { Country, CountryModel } from './country.model'
+import { Scene, SceneModel } from './scene.model'
 import { Timestampable } from './timestampable'
 
-const _TABLENAME = 'states'
+const _TABLENAME = 'characters'
 
-export class StateModel extends Timestampable {
+export class CharacterModel extends Timestampable {
   static tableName = _TABLENAME;
 
   id!: number;
-  code!: string;
   name!: string;
-  country!: Country;
+  scene!: Scene;
 
   static get jsonSchema() : JSONSchema {
     return {
       type: 'object',
-      required: ['code', 'name'],
+      required: ['name'],
       properties: {
-        code: { type: 'string' },
         name: { type: 'string' },
       },
     }
@@ -27,21 +25,21 @@ export class StateModel extends Timestampable {
 
   static get relationMappings() : any {
     return {
-      country: {
+      scene: {
         relation: Model.BelongsToOneRelation,
-        modelClass: CountryModel,
+        modelClass: SceneModel,
         join: {
-          from: _TABLENAME + '.country_id',
-          to: 'countries.id',
+          from: _TABLENAME + '.scene_id',
+          to: 'scenes.id',
         },
       },
     }
   }
 }
 
-export type State = ModelObject<StateModel>;
+export type Character = ModelObject<CharacterModel>;
 
-export default function (app: Application): typeof StateModel {
+export default function (app: Application): typeof CharacterModel {
   DBUtils.tableCheck(app, _TABLENAME)
-  return StateModel
+  return CharacterModel
 }
