@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <q-list dense bordered padding >
+    <!-- <q-list dense bordered padding >
       <q-item
         v-for="state in states"
         v-bind:key="state.id"
@@ -9,7 +9,7 @@
           {{ state.code }} - {{ state.name }}
         </q-item-section>
       </q-item>
-    </q-list>
+    </q-list> -->
   </q-page>
 </template>
 
