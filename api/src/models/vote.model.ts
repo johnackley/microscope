@@ -1,25 +1,23 @@
 import { JSONSchema, Model, ModelObject } from 'objection'
 import { DBUtils } from '../db-utils'
 import { Application } from '../declarations'
-import { Country, CountryModel } from './country.model'
+import { Push, PushModel } from './push.model'
 import { Timestampable } from './timestampable'
 
-const _TABLENAME = 'states'
+const _TABLENAME = 'votes'
 
-export class StateModel extends Timestampable {
+export class VoteModel extends Timestampable {
   static tableName = _TABLENAME;
 
   id!: number;
-  code!: string;
   name!: string;
-  country!: Country;
+  push!: Push;
 
   static get jsonSchema() : JSONSchema {
     return {
       type: 'object',
-      required: ['code', 'name'],
+      required: ['name'],
       properties: {
-        code: { type: 'string' },
         name: { type: 'string' },
       },
     }
@@ -27,21 +25,21 @@ export class StateModel extends Timestampable {
 
   static get relationMappings() : any {
     return {
-      country: {
+      push: {
         relation: Model.BelongsToOneRelation,
-        modelClass: CountryModel,
+        modelClass: PushModel,
         join: {
-          from: _TABLENAME + '.country_id',
-          to: 'countries.id',
+          from: _TABLENAME + '.push_id',
+          to: 'pushes.id',
         },
       },
     }
   }
 }
 
-export type State = ModelObject<StateModel>;
+export type Vote = ModelObject<VoteModel>;
 
-export default function (app: Application): typeof StateModel {
+export default function (app: Application): typeof VoteModel {
   DBUtils.tableCheck(app, _TABLENAME)
-  return StateModel
+  return VoteModel
 }

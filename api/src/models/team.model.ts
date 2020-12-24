@@ -5,8 +5,9 @@ import { Timestampable } from './timestampable'
 import { User, UserModel } from './user.model'
 
 const _TABLENAME = 'teams'
+const _MEMBERS_TABLENAME = 'team_members'
 
-export class OrgModel extends Timestampable {
+export class TeamModel extends Timestampable {
   static tableName = _TABLENAME
 
   id!: number
@@ -31,25 +32,36 @@ export class OrgModel extends Timestampable {
     }
   }
 
-  
   static get relationMappings() : any {
     return {
       owner: {
         relation: Model.BelongsToOneRelation,
         modelClass: UserModel,
         join: {
-          from: 'teams.owner_id',
+          from: _TABLENAME + '.owner_id',
+          to: 'users.id',
+        },
+      },
+      members: {
+        relation: Model.ManyToManyRelation,
+        modelClass: UserModel,
+        join: {
+          from: 'teams.id',
+          through: {
+            from: _MEMBERS_TABLENAME + '.team_id',
+            to: _MEMBERS_TABLENAME + '.user_id',
+            // extra: ['extra'],
+          },
           to: 'users.id',
         },
       },
     }
   }
-
 }
 
-export type Org = ModelObject<OrgModel>
+export type Team = ModelObject<TeamModel>
 
-export default function (app: Application): typeof OrgModel {
+export default function (app: Application): typeof TeamModel {
   DBUtils.tableCheck(app, _TABLENAME)
-  return OrgModel
+  return TeamModel
 }

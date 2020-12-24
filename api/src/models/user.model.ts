@@ -31,6 +31,10 @@ export class UserModel extends Timestampable {
       },
     }
   }
+
+  static get relationMappings() : any {
+    return {}
+  }
 }
 
 export type User = ModelObject<UserModel>

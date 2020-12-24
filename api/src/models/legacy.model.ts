@@ -1,25 +1,23 @@
 import { JSONSchema, Model, ModelObject } from 'objection'
 import { DBUtils } from '../db-utils'
 import { Application } from '../declarations'
-import { Country, CountryModel } from './country.model'
+import { Pass, PassModel } from './pass.model'
 import { Timestampable } from './timestampable'
 
-const _TABLENAME = 'states'
+const _TABLENAME = 'legacies'
 
-export class StateModel extends Timestampable {
+export class LegacyModel extends Timestampable {
   static tableName = _TABLENAME;
 
   id!: number;
-  code!: string;
   name!: string;
-  country!: Country;
+  pass!: Pass;
 
   static get jsonSchema() : JSONSchema {
     return {
       type: 'object',
-      required: ['code', 'name'],
+      required: ['name'],
       properties: {
-        code: { type: 'string' },
         name: { type: 'string' },
       },
     }
@@ -27,21 +25,21 @@ export class StateModel extends Timestampable {
 
   static get relationMappings() : any {
     return {
-      country: {
+      pass: {
         relation: Model.BelongsToOneRelation,
-        modelClass: CountryModel,
+        modelClass: PassModel,
         join: {
-          from: _TABLENAME + '.country_id',
-          to: 'countries.id',
+          from: _TABLENAME + '.pass_id',
+          to: 'passes.id',
         },
       },
     }
   }
 }
 
-export type State = ModelObject<StateModel>;
+export type Legacy = ModelObject<LegacyModel>;
 
-export default function (app: Application): typeof StateModel {
+export default function (app: Application): typeof LegacyModel {
   DBUtils.tableCheck(app, _TABLENAME)
-  return StateModel
+  return LegacyModel
 }
