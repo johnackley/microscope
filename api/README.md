@@ -1,6 +1,6 @@
-# beet-and-pear-api
+# microscope-api
 
-> Beet &amp; Pear Services API
+> Microscope Services API
 
 ## About
 
@@ -14,7 +14,7 @@ Getting up and running is as easy as 1, 2, 3.
 2. Install your dependencies
 
     ```
-    cd path/to/beet-and-pear-api
+    cd api
     npm install
     ```
 

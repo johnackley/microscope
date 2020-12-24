@@ -1,6 +1,6 @@
 {
-  "name": "beet-and-pear-api",
-  "description": "Beet & Pear Services API",
+  "name": "microscope-api",
+  "description": "Microscope Services API",
   "version": "0.0.0",
   "homepage": "",
   "private": true,
@@ -28,8 +28,8 @@
     "lint": "eslint src/. test/. --config .eslintrc.json --ext .ts",
     "lint:fix": "eslint src/. test/. --config .eslintrc.json --ext .ts --fix",
     "dev": "ts-node-dev --no-notify src/",
-    "start": "npm run compile && node lib/",
-    "jest": "jest  --forceExit --detectOpenHandles",
+    "start": "npm run compile && node --unhandled-rejections=strict lib/",
+    "jest": "jest  --forceExit --detectOpenHandles --unhandled-rejections=strict",
     "compile": "shx rm -rf lib/ && tsc"
   },
   "standard": {
