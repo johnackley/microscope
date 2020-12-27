@@ -4,5 +4,6 @@
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
   "typescript.tsdk": "node_modules/typescript/lib",
   "vetur.experimental.templateInterpolationService": true,
-  "compile-hero.disable-compile-files-on-did-save-code": true
+  "compile-hero.disable-compile-files-on-did-save-code": true,
+  "git.ignoreLimitWarning": true
 }
